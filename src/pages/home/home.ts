@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage, MenuController } from 'ionic-angular';
 
 //home.ts é o controlador da view home.html
 //esse decorator Component abaixo é que faz essa classe ser o controlador da view
@@ -11,9 +11,18 @@ import { NavController, IonicPage } from 'ionic-angular';
 export class HomePage {
 
   //navCtrl é um objeto do tipo NavController. Para injetar (no Angular ou TS) uma dependência ou uma instancia de um objeto dentro da classe, você declara como parâmetro no seu Construtor
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public menu: MenuController) {
 
   }
+
+   //Lifecycle events ou Ciclo de vida das páginas do IONIC, são esses controlam alguns comandos nas mudanças de página 
+  public ionViewWillEnter() {
+      this.menu.swipeEnable(false);
+    }
+    
+  public ionViewDidLeave() {
+      this.menu.swipeEnable(true);
+    }
 
   public login() {
     //o this é uma obrigação no TS
@@ -21,6 +30,8 @@ export class HomePage {
     this.navCtrl.setRoot('CategoriasPage');
     //empilha uma página em cima da outra.
     //com o push, ele automaticamente coloca a setinha para voltar porém, nesse caso não queremos que ele volte para a tela de login, então vamos tirar o push
+
+   
   }
 
 }
