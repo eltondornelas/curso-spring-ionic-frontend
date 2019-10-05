@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CategoriaService } from '../../services/domain/categoria.service';
 
 /**
  * Generated class for the CategoriasPage page.
@@ -15,11 +16,23 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CategoriasPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public categoriaService: CategoriaService) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CategoriasPage');
+  ionViewDidLoad() {    
+    this.categoriaService.findAll()
+    .subscribe(response => {
+      console.log(response);
+    },
+    error => {
+      console.log(error);
+    });
+    //função "Callback"
+    //findAll é uma função/chamada assíncrona, então ele está se "inscrevendo" para quando a resposta chegar, executar a função do subscribe, que vai pegar a resposta e escreve na tela
+    //essa função é executada se sucesso
   }
 
 }
