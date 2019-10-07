@@ -33,9 +33,7 @@ export class CategoriasPage {
     .subscribe(response => {
       this.items = response;
     },
-    error => {
-      console.log(error);
-    });
+    error => {});
     //função "Callback"
     //findAll é uma função/chamada assíncrona, então ele está se "inscrevendo" para quando a resposta chegar, executar a função do subscribe, que vai pegar a resposta e escreve na tela
     //essa função é executada se sucesso
