@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, MenuController } from 'ionic-angular';
+import { CredenciaisDTO } from '../../models/credenciais.dto';
 
 //home.ts é o controlador da view home.html
 //esse decorator Component abaixo é que faz essa classe ser o controlador da view
@@ -9,6 +10,11 @@ import { NavController, IonicPage, MenuController } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+  creds: CredenciaisDTO = {
+    email: "",
+    senha: ""
+  }
 
   //navCtrl é um objeto do tipo NavController. Para injetar (no Angular ou TS) uma dependência ou uma instancia de um objeto dentro da classe, você declara como parâmetro no seu Construtor
   constructor(public navCtrl: NavController, public menu: MenuController) {
@@ -25,6 +31,7 @@ export class HomePage {
     }
 
   public login() {
+    console.log(this.creds);
     //o this é uma obrigação no TS
     //this.navCtrl.push('CategoriasPage');
     this.navCtrl.setRoot('CategoriasPage');
