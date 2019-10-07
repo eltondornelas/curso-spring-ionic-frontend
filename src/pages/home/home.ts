@@ -37,7 +37,7 @@ export class HomePage {
   public login() {
     this.auth.authenticate(this.creds)
     .subscribe(response => {
-      console.log(response.headers.get('Authorization'));
+      this.auth.successfulLogin(response.headers.get('Authorization'));
       this.navCtrl.setRoot('CategoriasPage');
       //empilha uma página em cima da outra.
       //com o push, ele automaticamente coloca a setinha para voltar porém, nesse caso não queremos que ele volte para a tela de login, então vamos tirar o push
