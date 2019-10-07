@@ -25,6 +25,17 @@ export class AuthService {
             });
     }
 
+    refreshToken() {
+        //endpoints igual a mesma classe lá no STS.
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/auth/refresh_token`, 
+            {},
+            {
+                observe: 'response',
+                responseType: 'text'
+            });
+    }
+
     successfulLogin(authorizationValue : string) {
         let tok = authorizationValue.substring(7);
         //recorta a string a partir do 7º caractere

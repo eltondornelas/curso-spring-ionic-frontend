@@ -34,6 +34,16 @@ export class HomePage {
       this.menu.swipeEnable(true);
     }
 
+  //a palavra tem que estar igual
+  ionViewDidEnter() {
+    this.auth.refreshToken()
+      .subscribe(response => {
+        this.auth.successfulLogin(response.headers.get('Authorization'));
+        this.navCtrl.setRoot('CategoriasPage');
+      },
+      error => {});  
+  }
+
   public login() {
     this.auth.authenticate(this.creds)
     .subscribe(response => {
