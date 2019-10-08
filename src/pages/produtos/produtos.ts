@@ -12,7 +12,9 @@ import { LoadingController } from 'ionic-angular/components/loading/loading-cont
 })
 export class ProdutosPage {
 
-  items : ProdutoDTO[];
+  items : ProdutoDTO[] = [];
+  //iniciando com lista vazia. Sempre que buscar uma nova página, vou concatenar essa página com a lista que já existia.  
+  page : number = 0;
 
   constructor(
     public navCtrl: NavController, 
@@ -29,11 +31,17 @@ export class ProdutosPage {
     let categoria_id = this.navParams.get('categoria_id');
     let loader = this.presentLoading();
     //resolver iniciar o loader antes de fazer a requisição do backend para carregar os produtos
-    this.produtoService.findByCategoria(categoria_id)
+    this.produtoService.findByCategoria(categoria_id, this.page, 10)
+    //vai buscar os produtos de 10 em 10
       .subscribe(response => {
-        this.items = response['content'];
+        let start = this.items.length;
+        this.items = this.items.concat(response['content']);
+        //concatenando a nova resposta com a que já tinha antes.
+        let end = this.items.length - 1;
         loader.dismiss();
-        this.loadImageUrls();
+        console.log(this.page);
+        console.log(this.items);
+        this.loadImageUrls(start, end);
       },
       error => {
         loader.dismiss();
@@ -50,8 +58,8 @@ export class ProdutosPage {
     return loader;
   }
 
-  loadImageUrls() {
-    for (var i=0; i<this.items.length; i++) {
+  loadImageUrls(start: number, end: number) {
+    for (var i=start; i<=end; i++) {
       let item = this.items[i];
       this.produtoService.getSmallImageFromBucket(item.id)
         .subscribe(response => {
@@ -65,12 +73,23 @@ export class ProdutosPage {
     this.navCtrl.push('ProdutoDetailPage', {produto_id: produto_id})
   }
 
-  doRefresh(refresher) {    
+  doRefresh(refresher) {   
+    this.page = 0;
+    this.items = []; 
+    //esses comandos são para zerar a lista quando feito o refresh
     this.loadData();
     //ele precisa carregar todos os dados antes de completar o refresh
     setTimeout(() => {
       refresher.complete();
     }, 1000);
     //1000 milisegundos
+  }
+
+  doInfinite(infiniteScroll) {
+    this.page++;
+    this.loadData();
+    setTimeout(() => {
+      infiniteScroll.complete();
+    }, 1000);
   }
 }
