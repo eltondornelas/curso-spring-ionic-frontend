@@ -12,8 +12,10 @@ export class ClienteService {
     }
     
     //método recebe um e-mail e retorna um Observable de ClienteDTO.
-    findByEmail(email: string) : Observable<ClienteDTO> {
-        return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
+    //findByEmail(email: string) : Observable<ClienteDTO> {
+    //antes havíamos tipado para receber um ClienteDTO do front end, agora vamos receber o tipo do backend, com todas as informações inclusive endereços
+    findByEmail(email: string) {
+        return this.http.get(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
     }
 
     //pega imagem no bucket da AWS S3

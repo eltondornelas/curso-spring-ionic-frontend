@@ -39,7 +39,8 @@ export class ProfilePage {
     if (localUser && localUser.email) {
       this.clienteService.findByEmail(localUser.email)
       .subscribe(response => {
-        this.cliente = response;
+        this.cliente = response as ClienteDTO;
+        //é um Cast aqui em cima.
         this.getImageIfExists(); //busca imagem do Bucket do S3.
       },
       error => {
