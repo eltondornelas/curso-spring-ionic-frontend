@@ -56,8 +56,9 @@ export class PickAddressPage {
     }
 
     nextPage(item: EnderecoDTO) {
-      this.pedido.enderecoDeEntrega = {id: item.id}; 
+      this.pedido.enderecoDeEntrega = {id: item.id};
       //cria um novo objeto para mostrar apenas o id e não o endereço completo      
-      console.log(this.pedido); 
+      this.navCtrl.push('PaymentPage', {pedido: this.pedido});
+      //manda como parâmetro esse pedido
     }
 }
