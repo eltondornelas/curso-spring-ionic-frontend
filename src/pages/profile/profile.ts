@@ -37,8 +37,12 @@ export class ProfilePage {
   //quando cria a página usando o CLI (terminal) ele já cria com essa função.
   ionViewDidLoad() {
     //console.log('ionViewDidLoad ProfilePage');
-    //executa algo quando a página é carregada.
+    //executa algo quando a página é carregada.     
 
+    this.loadData();
+  }
+
+  loadData() {
     let localUser = this.storage.getLocalUser();
     if (localUser && localUser.email) {
       this.clienteService.findByEmail(localUser.email)
@@ -55,7 +59,7 @@ export class ProfilePage {
   }
   else {
     this.navCtrl.setRoot('HomePage');
-    }    
+    }   
   }
 
   getImageIfExists() {
@@ -84,6 +88,22 @@ export class ProfilePage {
      this.cameraOn = false;
     }, (err) => {
     });
+  }
+
+  sendPicture() {
+    //imagem com base 64
+    this.clienteService.uploadPicture(this.picture)
+      .subscribe(response => {
+        this.picture = null;
+        this.loadData();
+      },
+      error => {
+      });
+  }
+
+  cancel() {
+    this.picture = null;
+    //para descartar imagem.
   }
 
 }
