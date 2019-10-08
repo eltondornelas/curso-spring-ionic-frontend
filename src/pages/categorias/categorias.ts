@@ -39,4 +39,8 @@ export class CategoriasPage {
     //essa função é executada se sucesso
   }
 
+  showProdutos() {
+    this.navCtrl.push('ProdutosPage');    
+  }
+
 }
