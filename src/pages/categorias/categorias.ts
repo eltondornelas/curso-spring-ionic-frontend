@@ -39,8 +39,9 @@ export class CategoriasPage {
     //essa função é executada se sucesso
   }
 
-  showProdutos() {
-    this.navCtrl.push('ProdutosPage');    
+  showProdutos(categoria_id : string) {
+    this.navCtrl.push('ProdutosPage', {categoria_id: categoria_id});
+    //o primeiro categoria_id é o nome do atributo, poderia ser outro nome.
   }
 
 }

@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { ClienteService } from '../services/domain/cliente.service';
 import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
+import { ProdutoService } from '../services/domain/produto.service';
 
 //Decorator (ex: @NgModule) é uma anotação que vai ter configurações para alterar a classe. ele declara um objeto.
 //abriu chaves é objeto. atributos: declarations, imports, bootstrap, entrycomponents e providers. são listas, pois abrem conchetes
@@ -39,7 +40,8 @@ import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
     ErrorInterceptorProvider,
     AuthService,
     StorageService,
-    ClienteService
+    ClienteService,
+    ProdutoService
   ]
 })
 export class AppModule {}
