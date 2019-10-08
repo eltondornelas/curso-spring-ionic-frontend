@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EnderecoDTO } from '../../models/endereco.dto';
 import { StorageService } from '../../services/storage.service';
 import { ClienteService } from '../../services/domain/cliente.service';
+import { PedidoDTO } from '../../models/pedido.dto';
+import { CartService } from '../../services/domain/cart.service';
+
 
 @IonicPage()
 @Component({
@@ -12,12 +15,14 @@ import { ClienteService } from '../../services/domain/cliente.service';
 export class PickAddressPage {
 
   items: EnderecoDTO[];
+  pedido: PedidoDTO;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public storage: StorageService,
-    public clienteService: ClienteService) {
+    public clienteService: ClienteService,
+    public cartService: CartService) {
   }
 
   ionViewDidLoad() {
@@ -27,6 +32,17 @@ export class PickAddressPage {
       this.clienteService.findByEmail(localUser.email)
         .subscribe(response => {
           this.items = response['enderecos'];
+          
+          let cart = this.cartService.getCart();
+
+          this.pedido = {
+            cliente: {id: response['id']},
+            enderecoDeEntrega: null,
+            pagamento: null,
+            itens : cart.items.map(x => {return {quantidade: x.quantidade, produto: {id: x.produto.id}}})
+            //map percorre toda a lista.
+            //esse comando acima é uma declaração de objeto...
+          }
         },
         error => {
           if (error.status == 403) {
@@ -37,5 +53,11 @@ export class PickAddressPage {
       else {
         this.navCtrl.setRoot('HomePage');
       }
+    }
+
+    nextPage(item: EnderecoDTO) {
+      this.pedido.enderecoDeEntrega = {id: item.id}; 
+      //cria um novo objeto para mostrar apenas o id e não o endereço completo      
+      console.log(this.pedido); 
     }
 }
