@@ -22,6 +22,10 @@ export class ProdutosPage {
   }
 
   ionViewDidLoad() {
+    this.loadData();
+  }
+
+  loadData() {
     let categoria_id = this.navParams.get('categoria_id');
     let loader = this.presentLoading();
     //resolver iniciar o loader antes de fazer a requisição do backend para carregar os produtos
@@ -59,5 +63,14 @@ export class ProdutosPage {
 
   showDetail(produto_id : string) {
     this.navCtrl.push('ProdutoDetailPage', {produto_id: produto_id})
+  }
+
+  doRefresh(refresher) {    
+    this.loadData();
+    //ele precisa carregar todos os dados antes de completar o refresh
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
+    //1000 milisegundos
   }
 }
