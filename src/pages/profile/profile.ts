@@ -87,6 +87,7 @@ export class ProfilePage {
      this.picture = 'data:image/png;base64,' + imageData;
      this.cameraOn = false;
     }, (err) => {
+      this.cameraOn = false;
     });
   }
 
@@ -107,6 +108,8 @@ export class ProfilePage {
      this.picture = 'data:image/png;base64,' + imageData;
      this.cameraOn = false;
     }, (err) => {
+      this.cameraOn = false;
+      //aqui dentro do erro é necessário para o caso da pessoa cancelar/voltar da galeria ou da câmera. Sem isso os botões ficam desativados.
     });
   }
 
